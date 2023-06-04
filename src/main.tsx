@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
 import {
   createBrowserRouter,
@@ -9,12 +8,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Authentication from "./components/Authentication.tsx";
+import Document from "./components/Document.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Outlet />}>
       <Route index path="/" element={<Authentication />} />
-      <Route path="/document" element={<App />} />
+      <Route path="/document" element={<Document />} />
     </Route>
   )
 );

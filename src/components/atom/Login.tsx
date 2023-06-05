@@ -10,12 +10,24 @@ import {
   TextField,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import AppleIcon from "@mui/icons-material/Apple";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, facebookProvider, googleProvider } from "../../config/firebase";
+import { useNavigate } from "react-router-dom";
 interface ILoginProps {
   handleChange: () => void;
 }
 
 const Login: React.FunctionComponent<ILoginProps> = ({ handleChange }) => {
+  const [text, setText] = React.useState<string>("Next");
+  const navigate = useNavigate();
+  const [details, setDetails] = React.useState<{
+    email: string;
+    password: string;
+  }>({
+    email: "",
+    password: "",
+  });
   return (
     <Dialog
       open={true}
@@ -51,7 +63,11 @@ const Login: React.FunctionComponent<ILoginProps> = ({ handleChange }) => {
       >
         <Button
           fullWidth
-          onClick={() => {}}
+          onClick={async () => {
+            await signInWithPopup(auth, googleProvider)
+              .then(() => navigate("/document"))
+              .catch((error) => console.log(error));
+          }}
           variant="outlined"
           sx={{
             textTransform: "none",
@@ -63,15 +79,19 @@ const Login: React.FunctionComponent<ILoginProps> = ({ handleChange }) => {
         </Button>
         <Button
           fullWidth
-          onClick={() => {}}
+          onClick={async () => {
+            await signInWithPopup(auth, facebookProvider).then(() =>
+              navigate("/document")
+            );
+          }}
           variant="outlined"
           sx={{
             textTransform: "none",
             borderRadius: "1rem",
           }}
-          startIcon={<AppleIcon />}
+          startIcon={<FacebookIcon />}
         >
-          Sign In with apple
+          Sign In with Facebook
         </Button>
       </DialogActions>
       <DialogContent
@@ -84,17 +104,56 @@ const Login: React.FunctionComponent<ILoginProps> = ({ handleChange }) => {
           width: "80%",
         }}
       >
-        <TextField
-          fullWidth
-          required
-          autoComplete="off"
-          label="Phone,email or username"
-          type="text"
-        />
+        {text === "Next" ? (
+          <TextField
+            name="email"
+            onChange={(e) => {
+              setDetails({ ...details, [e.target.name]: e.target.value });
+            }}
+            fullWidth
+            required
+            value={details.email}
+            autoComplete="off"
+            label="Phone,email or username"
+            type="text"
+          />
+        ) : (
+          <TextField
+            name="password"
+            onChange={(e) => {
+              setDetails({ ...details, [e.target.name]: e.target.value });
+            }}
+            fullWidth
+            required
+            value={details.password}
+            placeholder="Enter your password"
+            autoComplete="off"
+            label="Password"
+            type="password"
+          />
+        )}
       </DialogContent>
       <DialogActions sx={{ width: "80%" }}>
-        <Button variant="contained" fullWidth sx={{ borderRadius: "1rem" }}>
-          Submit
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ borderRadius: "1rem" }}
+          onClick={async () => {
+            if (text === "Next") {
+              setText("Submit");
+            } else if (details.email && details.password) {
+              console.log(details);
+              await signInWithEmailAndPassword(
+                auth,
+                details.email,
+                details.password
+              )
+                .then(() => navigate("/document"))
+                .catch((error) => console.log(error.message));
+            }
+          }}
+        >
+          {text === "Next" ? "Next" : "Submit"}
         </Button>
       </DialogActions>
       <DialogContentText variant="caption" fontSize={15}>

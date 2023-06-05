@@ -9,14 +9,49 @@ import {
   Link,
   TextField,
 } from "@mui/material";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 import GoogleIcon from "@mui/icons-material/Google";
-import AppleIcon from "@mui/icons-material/Apple";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import { useNavigate } from "react-router-dom";
 interface ISignUpProps {
   handleChange: () => void;
 }
 
 const SignUp: React.FunctionComponent<ISignUpProps> = ({ handleChange }) => {
-  const signUpfields: string[] = ["Name", "Email", "Password"];
+  const signUpfields: string[] = ["Email", "Password"];
+  const navigate = useNavigate();
+  const [details, setDetails] = React.useState<{
+    Email: string;
+    Password: string;
+  }>({
+    Email: "",
+    Password: "",
+  });
+  async function handleRegister(): Promise<void> {
+    try {
+      if (details.Email && details.Password) {
+        await createUserWithEmailAndPassword(
+          auth,
+          details.Email,
+          details.Password
+        ).then(() => handleChange());
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
+  const googleSignup = async () => {
+    await signInWithPopup(auth, googleProvider).then(() =>
+      navigate("/document")
+    );
+  };
+  const appleSignup = async () => {
+    await signInWithPopup(auth, facebookProvider).then(() =>
+      navigate("/document")
+    );
+  };
   return (
     <Dialog
       open={true}
@@ -52,7 +87,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = ({ handleChange }) => {
       >
         <Button
           fullWidth
-          onClick={() => {}}
+          onClick={googleSignup}
           variant="outlined"
           sx={{
             textTransform: "none",
@@ -64,15 +99,15 @@ const SignUp: React.FunctionComponent<ISignUpProps> = ({ handleChange }) => {
         </Button>
         <Button
           fullWidth
-          onClick={() => {}}
+          onClick={appleSignup}
           variant="outlined"
           sx={{
             textTransform: "none",
             borderRadius: "1rem",
           }}
-          startIcon={<AppleIcon />}
+          startIcon={<FacebookIcon />}
         >
-          Sign up with apple
+          Sign up with Facebook
         </Button>
       </DialogActions>
       <DialogContent
@@ -90,6 +125,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = ({ handleChange }) => {
             <TextField
               fullWidth
               required
+              name={field}
               autoComplete="off"
               key={index}
               label={field}
@@ -100,12 +136,23 @@ const SignUp: React.FunctionComponent<ISignUpProps> = ({ handleChange }) => {
                   ? "email"
                   : "password"
               }
+              onChange={(e) => {
+                setDetails({
+                  ...details,
+                  [e.target.name]: e.target.value,
+                });
+              }}
             />
           );
         })}
       </DialogContent>
       <DialogActions sx={{ width: "80%" }}>
-        <Button variant="contained" fullWidth sx={{ borderRadius: "1rem" }}>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ borderRadius: "1rem" }}
+          onClick={handleRegister}
+        >
           Submit
         </Button>
       </DialogActions>

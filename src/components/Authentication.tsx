@@ -1,6 +1,9 @@
 import * as React from "react";
 import SignUp from "./atom/Signup";
 import Login from "./atom/Login";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 
 interface IAuthenticationProps {}
 
@@ -9,7 +12,14 @@ const Authentication: React.FunctionComponent<IAuthenticationProps> = () => {
   function handleChange() {
     setChange(!change);
   }
-  console.log(change);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/document");
+      }
+    });
+  }, []);
   return change ? (
     <SignUp handleChange={handleChange} />
   ) : (

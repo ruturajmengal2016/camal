@@ -73,3 +73,8 @@ To deploy this project run
 
 ## Screenshots
 
+![Screenshot 2023-06-07 003833](https://github.com/ruturajmengal2016/camal/assets/114099113/359f20d1-2467-4682-b027-64ea77732d85)
+
+![Screenshot 2023-06-07 003902](https://github.com/ruturajmengal2016/camal/assets/114099113/d9845983-6f71-4348-bcce-a301603bdbb7)
+
+![Screenshot 2023-06-07 003926](https://github.com/ruturajmengal2016/camal/assets/114099113/0c11d75e-47e8-4b0e-8f3d-4bd885da32ff)

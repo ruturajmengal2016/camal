@@ -38,7 +38,7 @@ export default function Navigation() {
 
   const routes: string[] = ["Home", "About", "My store"];
   return (
-    <Box sx={{ flexGrow: 1, position: "sticky", top: 0 }}>
+    <Box sx={{ flexGrow: 1, position: "sticky", top: 0, zIndex: 2 }}>
       <AppBar position="sticky">
         <Toolbar
           variant="dense"

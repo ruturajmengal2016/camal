@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import Navigation from "./atom/Navigation";
 import Home from "../pages/Home";
 import About from "../pages/About";
+import Guide from "../pages/Guide";
 
 interface IDocumentProps {}
 
@@ -11,6 +12,7 @@ const Document: React.FunctionComponent<IDocumentProps> = () => {
     <Box height="fit-content">
       <Navigation />
       <Home />
+      <Guide />
       <About />
     </Box>
   );

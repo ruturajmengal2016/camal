@@ -1,6 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import * as React from "react";
-import VerticalLinearStepper from "../components/atom/Stepper";
 
 interface IAboutProps {}
 
@@ -8,22 +7,50 @@ const About: React.FunctionComponent<IAboutProps> = () => {
   return (
     <Box
       sx={{
-        padding: "1rem 0.5rem",
         display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
         minHeight: "fit-content",
-        background: `linear-gradient(236deg, rgba(215,47,121,1) 46%, rgba(53,54,200,1) 46%, rgba(148,187,233,1) 100%)`,
+        background: `linear-gradient(225deg, rgba(63,94,251,1) 0%, rgba(159,82,178,1) 51%, rgba(214,32,32,1) 100%)`,
       }}
     >
-      <Typography
-        variant="h3"
-        fontFamily="inherit"
-        color="lightgreen"
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "flex-start",
+          minHeight: "80%",
+          minWidth: "80%",
+          padding: "1rem",
+        }}
       >
-        Let's start your business
-      </Typography>
-      <VerticalLinearStepper />
+        <Typography
+          variant="h1"
+          fontFamily="inherit"
+          sx={{ color: "lightpink" }}
+        >
+          About Us.
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "1rem", sm: "2rem" },
+            width: { xs: "90%", sm: "60%" },
+            textAlign: "justify",
+            color:"#dee2e6",
+            fontFamily:"unset"
+          }}
+        >
+          A camal website is one that allows people to sell physical goods,
+          services, and digital products over the internet rather than at a
+          brick-and-mortar location. Through this website, a business can
+          process orders, accept payments, manage shipping and logistics, and
+          provide customer service.
+        </Typography>
+        <Button variant="contained">Learn More.</Button>
+      </Box>
     </Box>
   );
 };

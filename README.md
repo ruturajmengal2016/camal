@@ -52,6 +52,7 @@ Start the server
 
 ## Deployment
 
+The deployment link of this project is https://camal-b7b55.web.app/
 To deploy this project run
 
 ```bash

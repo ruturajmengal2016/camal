@@ -20,6 +20,11 @@ const Mystore: React.FunctionComponent<IMystoreProps> = () => {
     name: string;
     price: string;
   }>({ id: uuidv4().slice(0, 8), name: "", price: "" });
+  const [updateProduct, setUpdateProduct] = React.useState<{
+    id?: string;
+    name?: string;
+    price?: string;
+  }>({ id: "", name: "", price: "" });
   const [list, setList] = React.useState<any[]>([]);
   return (
     <Box
@@ -263,12 +268,14 @@ const Mystore: React.FunctionComponent<IMystoreProps> = () => {
                   textTransform: "none",
                 }}
                 onClick={() => {
-                  setList([...list, product]);
-                  setProduct({
-                    id: uuidv4().slice(0, 8),
-                    name: "",
-                    price: "",
-                  });
+                  if (product.name && product.price) {
+                    setList([...list, product]);
+                    setProduct({
+                      id: uuidv4().slice(0, 8),
+                      name: "",
+                      price: "",
+                    });
+                  }
                 }}
               >
                 Add product
@@ -288,23 +295,66 @@ const Mystore: React.FunctionComponent<IMystoreProps> = () => {
                 autoComplete="off"
                 variant="outlined"
                 label="product id"
+                name="id"
+                value={updateProduct.id}
+                onChange={(e) => {
+                  setUpdateProduct({
+                    ...updateProduct,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              />
+              <TextField
+                required
+                autoComplete="off"
+                variant="outlined"
+                label="Name"
+                name="name"
+                value={updateProduct.name}
+                onChange={(e) => {
+                  setUpdateProduct({
+                    ...updateProduct,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
               />
               <TextField
                 required
                 autoComplete="off"
                 variant="outlined"
                 label="product price"
-              />
-              <TextField
-                required
-                autoComplete="off"
-                variant="outlined"
-                label="product price"
+                name="price"
+                value={updateProduct.price}
+                onChange={(e) => {
+                  setUpdateProduct({
+                    ...updateProduct,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
               />
               <Button
                 variant="contained"
                 sx={{
                   textTransform: "none",
+                }}
+                onClick={() => {
+                  if (
+                    updateProduct.id &&
+                    updateProduct.name &&
+                    updateProduct.price
+                  ) {
+                    const newArr = list.filter((ele) => {
+                      return ele.id !== updateProduct.id;
+                    });
+                    setList([...newArr, updateProduct]);
+                    setUpdateProduct({
+                      id: "",
+                      name: "",
+                      price: "",
+                    });
+                  } else {
+                    alert("Sorry!, All fields are mandatory");
+                  }
                 }}
               >
                 update product
@@ -335,11 +385,15 @@ const Mystore: React.FunctionComponent<IMystoreProps> = () => {
                   textTransform: "none",
                 }}
                 onClick={() => {
-                  const newList = list.filter((ele) => {
-                    return ele.id !== deleteId;
-                  });
-                  setList(newList);
-                  setDeleteId("");
+                  if (deleteId) {
+                    const newList = list.filter((ele) => {
+                      return ele.id !== deleteId;
+                    });
+                    setList(newList);
+                    setDeleteId("");
+                  } else {
+                    alert("delete Id mandatory");
+                  }
                 }}
               >
                 delete product

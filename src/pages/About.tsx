@@ -29,18 +29,24 @@ const About: React.FunctionComponent<IAboutProps> = () => {
         <Typography
           variant="h1"
           fontFamily="inherit"
-          sx={{ color: "lightpink" }}
+          sx={{
+            color: "lightpink",
+            fontSize: {
+              xs: "3.5rem",
+              md: "5rem",
+            },
+          }}
         >
           About Us.
         </Typography>
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: "1rem", sm: "2rem" },
+            fontSize: { xs: "1.2rem", sm: "2rem" },
             width: { xs: "90%", sm: "60%" },
             textAlign: "justify",
-            color:"#dee2e6",
-            fontFamily:"unset"
+            color: "#dee2e6",
+            fontFamily: "unset",
           }}
         >
           A camal website is one that allows people to sell physical goods,

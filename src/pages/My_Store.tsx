@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import StoreIcon from "@mui/icons-material/Store";
+import SaveIcon from "@mui/icons-material/Save";
 import { v4 as uuidv4 } from "uuid";
 interface IMystoreProps {}
 
@@ -352,7 +353,9 @@ const Mystore: React.FunctionComponent<IMystoreProps> = () => {
 };
 
 const Storeheader: React.FunctionComponent = () => {
-  const [focus, setFocus] = React.useState<string>("");
+  const [focus, setFocus] = React.useState<string>(
+    localStorage.getItem("storeName") || ""
+  );
   return (
     <Box
       sx={{
@@ -371,15 +374,24 @@ const Storeheader: React.FunctionComponent = () => {
       <StoreIcon sx={{ fontSize: "2.2rem", color: "palevioletred" }} />
       <TextField
         autoComplete="off"
-        placeholder="+ Add your store name"
+        placeholder="Add your store name"
         sx={{
           "& fieldset": {
             border: "none",
+            width: "50%",
+          },
+          input: {
+            "&::placeholder": {
+              fontSize: {
+                xs: "1.2rem",
+                md: "2rem",
+              },
+            },
           },
         }}
         type="text"
         size="small"
-        value={localStorage.getItem("storeName") || focus}
+        value={focus}
         onChange={(e) => {
           setFocus(e.target.value);
         }}
@@ -397,7 +409,7 @@ const Storeheader: React.FunctionComponent = () => {
                     localStorage.setItem("storeName", focus);
                   }}
                 >
-                  <StoreIcon />
+                  <SaveIcon color="success" />
                 </IconButton>
               )}
             </InputAdornment>

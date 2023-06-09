@@ -11,6 +11,7 @@ import Authentication from "./components/Authentication.tsx";
 import Document from "./components/Document.tsx";
 import About from "./pages/About.tsx";
 import Navigation from "./components/atom/Navigation.tsx";
+import Mystore from "./pages/My_Store.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,7 +32,7 @@ const router = createBrowserRouter(
         element={
           <>
             <Navigation />
-            <h1>Store</h1>
+            <Mystore />
           </>
         }
       />

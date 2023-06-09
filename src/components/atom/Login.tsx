@@ -13,14 +13,14 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 interface ILoginProps {
   handleChange: () => void;
 }
 
 const Login: React.FunctionComponent<ILoginProps> = ({ handleChange }) => {
   const [text, setText] = React.useState<string>("Next");
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const [details, setDetails] = React.useState<{
     email: string;
     password: string;
